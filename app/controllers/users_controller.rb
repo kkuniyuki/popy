@@ -43,7 +43,7 @@ before_action :authenticate_user!, only: [:update]
     code = params[:code]
     
     #一意性チェック
-    stampcode = StampCode.where(code: code)
+    stampcode = StampCode.find(code: code)
     if stampcode != nil
       flash[:notice] = "すでにこのコードは使用されました。"
       render :show
@@ -51,18 +51,20 @@ before_action :authenticate_user!, only: [:update]
     end
       
     # コードの中のidを取り出す
-    @code_id = code[]
+    @code_id = code[7..8]
     stamp = Stamp.find_by(id: @code_id)
     
     #stamp_idのチェック処理
     if stamp != nil
-      StampCode.create(code: params[:code], user_id: current_user,
-                       stamp_id: @code_id
-                       )
+      stampcode = StampCode.create(code: params[:code], user_id: current_user,
+                                    stamp_id: @code_id
+                                     )
+      stampcode.save
+                                     
       stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new
-      stampcode_all.each do |stampcode|
-        p @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
+      stampcode_all.each do |stampcode_i|
+        p @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
       end     
 
       redirect_to @stamp_all
