@@ -15,11 +15,7 @@ ActiveRecord::Schema.define(version: 20160620082157) do
 
   create_table "maps", force: :cascade do |t|
     t.binary   "image"
-    t.string   "status1",    null: false
-    t.string   "status2",    null: false
-    t.string   "status3",    null: false
-    t.string   "status4",    null: false
-    t.integer  "user_id"
+    t.string   "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
