@@ -9,6 +9,13 @@ Rails.application.routes.draw do
   resources :map
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  
+  resources :users do
+    member do
+      get 'stamp_update'
+    end
+  end
+  
   # resources :relationships, only: [:create, :destroy]
   # resources :ownerships, only: [:create, :destroy]
   # resources :items , only: [:new , :show]
