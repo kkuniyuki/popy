@@ -62,7 +62,14 @@ before_action :authenticate_user!, only: [:update]
       stampcode = StampCode.create(code: params[:code], user_id: current_user.id,
                                     stamp_id: @code_id
                                      )
-      stampcode.save
+      if  stampcode.valid?
+        stampcode.save
+      else
+        flash[:notice] = stampcode.errors.messages
+        render :show
+        return
+      end
+      
                                      
       p stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new

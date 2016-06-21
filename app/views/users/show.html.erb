@@ -15,7 +15,7 @@
   <%= form_for(@user, :url => {:action => 'update'}) do |f| %>
   <%= render 'shared/error_messages', object: f.object %> <!-- エラー表示 -->
     <label for="stampcode" class="control-label col-md-1">CODE:</label>
-    <input type="text" name="code"></input>
+    <input type="text" name="code", placeholder="popy_0000"></input>
     <%= f.submit "Confirm", class: "btn btn-sm btn-warning" %>
   <% end %>
   </div>
