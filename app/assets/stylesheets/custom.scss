@@ -7,7 +7,7 @@
 body {
   font-family: YuGothic, "游ゴシック", "メイリオ", Meiryo, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", sans-serif;
   padding-top: 60px;
-  background-color: #CCCC99;
+  background-color: #FFFFCC;
     
 }
 
@@ -54,18 +54,36 @@ h2 {
   color: #c53000;
 }
 
+/*welcome-index title*/
+h3 {
+  font-size: 2.5em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: left;
+  font-weight: normal;
+}
+
+h4 {
+  font-size: 1em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: left;
+  font-weight: normal;
+  color: #C0C0C0;
+}
+
 p {
   font-size: 1.1em;
   line-height: 1.7em;
 }
 
-/*  */
+/* fuPOPPY のlogo　設定 */
 
 #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: #741c00;
+  color: #562b2b;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
@@ -73,13 +91,13 @@ p {
 }
 
 #logo:hover {
-  color: #8e4600;
+  color: #cc9999;
   text-decoration: none;
 }
 
 /* mixins, variables, etc. */
 
-$gray-medium-light: #e6e6cc;
+$gray-medium-light: #d6d6ad;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
