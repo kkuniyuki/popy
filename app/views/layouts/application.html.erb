@@ -8,6 +8,11 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <!--to be edited-->
+  <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %> 
+  <% end %>
+  
   <!--header-->
   <%= render 'layouts/header' %>
   <div class="container">

@@ -10,12 +10,13 @@
   </aside>
   <div class="row">
   <div class="col-md-8"><a><img src="/images/map.png"/></a> </div>
+
   <div class="col-md-4">
-    <%= form_for(@stampcode) do |f| %>
+  <%= form_for(@user, :url => {:action => 'update'}) do |f| %>
     <label for="stampcode" class="control-label col-md-1">CODE:</label>
-    <%= f.text_field :stampcode, class: 'form-control' %>
+    <input type="text" name="code"></input>
     <%= f.submit "Confirm", class: "btn btn-sm btn-warning" %>
-    <% end %>
+  <% end %>
   </div>
 </div>
   

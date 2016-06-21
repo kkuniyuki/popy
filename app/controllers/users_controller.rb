@@ -16,34 +16,35 @@ before_action :authenticate_user!, only: [:update]
   
   def show
     @user = User.find(params[:id])
+    @stampcode = StampCode.new()
     
-    if @user.map_id = nil 
+    if @user.map_id == nil 
+       
        @map = Map.new(user_id: params[:id])
-      else
+    
+    else
 
     #TODO  既存のマップデータを呼び出す
-       @map = Map.find(user_id: params[:id])
+      @map = Map.find(user_id: params[:id])
 
     #TODO　既存のコレクションデータを呼び出す
       stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new
       stampcode_all.each do |stampcode|
-        p @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
+        @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
       end     
-      @stampcode = StampCode.create()
 
     end
+
 
   end
   
   
   def update
-    # TODO 入力時コードのバリデーション
-    
     code = params[:code]
     
     #一意性チェック
-    stampcode = StampCode.find(code: code)
+    stampcode = StampCode.find_by(code: code)
     if stampcode != nil
       flash[:notice] = "既にこのコードは使用されました。"
       render :show
@@ -69,7 +70,6 @@ before_action :authenticate_user!, only: [:update]
 
       redirect_to @stamp_all
     else
-　    #stamp_idのが間違いの場合
       flash[:notice] = "コードに誤りがあります。"
       render :show
       return
