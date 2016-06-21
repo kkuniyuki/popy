@@ -20,13 +20,14 @@ class UsersController < ApplicationController
     #TODO　新しいマップデータを作る
     #     @map = Map.new()
     #TODO　新しいコレクションデータを作る
-    #     @map = Map.new()
+    #     @stampcode = Stampcode.new()
     # else
     #TODO  既存のマップデータを呼び出す
+    #     @map = Map.find()
 
     #TODO　既存のコレクションデータを呼び出す
-    #     @map = Map.new()
-        
+    #     @stampcode = Stampcode.find()
+
     # end
 
   end
