@@ -1,7 +1,7 @@
 class StampCode < ActiveRecord::Base
-  validates :code, presence: true, length: { maximum: 9 }
+  validates :code, presence: true 
  # popyを含むのかチェック
-  validates :code, inclusion: { in: %w(popy_) }  
+#   validates :code, inclusion: { in: %w(popy_) }  
   
   belongs_to :user
   has_many :stamp

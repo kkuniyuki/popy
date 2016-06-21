@@ -15,13 +15,13 @@ ActiveRecord::Schema.define(version: 20160620082157) do
 
   create_table "maps", force: :cascade do |t|
     t.binary   "image"
-    t.string   "status1",    null: false
-    t.string   "status2",    null: false
-    t.string   "status3",    null: false
-    t.string   "status4",    null: false
+    t.string   "status1",    default: "f"
+    t.string   "status2",    default: "f"
+    t.string   "status3",    default: "f"
+    t.string   "status4",    default: "f"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "recommend_items", force: :cascade do |t|

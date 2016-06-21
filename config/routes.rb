@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'welcome#index'
+  # root to: 'sessions#new'
 
   get    'signup', to: 'users#new'
   get    'login' , to: 'sessions#new'
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
   
   resources :users do
     member do
-      get 'stamp_update'
+      patch 'stamp_update'
     end
   end
   

@@ -9,11 +9,31 @@
     </section>
   </aside>
   <div class="row">
-  <div class="col-md-8"><a><img src="/images/map.png"/></a> 
-  <img class=imgA1 src="/images/stamp1.jpeg">
-  <img class=imgB1 src="/images/stamp2.jpeg">
-  <img class=imgC1 src="/images/stamp3.jpeg">
-  <img class=imgD1 src="/images/stamp4.jpeg">
+  <div class="col-md-8">  
+    <%= image_tag @map.image %>
+ 
+  <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
+    <% if @map.status1 == true %>
+     <img class=imgA1 src="/images/stamp1.jpeg">
+    <% else %>
+     <img class=imgA1 src="/images/stamp1.jpeg">
+    <% end %>
+    <% if @map.status2 == true %>
+     <img class=imgB1 src="/images/stamp2.jpeg">
+    <% else %>
+     <img class=imgB1 src="/images/stamp2.jpeg">
+    <% end %>
+    <% if @map.status3 == true %>
+     <img class=imgC1 src="/images/stamp3.jpeg">
+    <% else %>
+     <img class=imgC1 src="/images/stamp3.jpeg">
+    <% end %>
+    <% if @map.status4 == true %>
+     <img class=imgD1 src="/images/stamp4.jpeg">
+    <% else %>
+     <img class=imgD1 src="/images/stamp4.jpeg">
+    <% end %>
+     
   </div>
 
   <div class="col-md-4">
@@ -25,11 +45,16 @@
   <% end %>
   <br><br>
 
-    <%= link_to image_tag("/images/stamp1.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <%= link_to image_tag("/images/stamp2.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <%= link_to image_tag("/images/stamp3.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <%= link_to image_tag("/images/stamp4.png", :border => 0, :alt => '', :title => ''), login_path%>
-
+  <% @stamp_all.each do |f| %>
+    <%= link_to image_tag f.image, stamp_update_user_path(:stamp_image => f.image) %>
+    
+  <% end %>
+  
   </div>
   </div>
 </div>
+
+    <% link_to image_tag("/images/stamp1.png", :border => 0, :alt => '', :title => ''), login_path%>
+    <% link_to image_tag("/images/stamp2.png", :border => 0, :alt => '', :title => ''), login_path%>
+    <% link_to image_tag("/images/stamp3.png", :border => 0, :alt => '', :title => ''), login_path%>
+    <% link_to image_tag("/images/stamp4.png", :border => 0, :alt => '', :title => ''), login_path%>
