@@ -31,9 +31,9 @@ before_action :authenticate_user!, only: [:update]
       stampcode_all.each do |stampcode|
         p @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
       end     
+      @stampcode = StampCode.create()
 
     # end
-
   end
   
   
@@ -45,7 +45,7 @@ before_action :authenticate_user!, only: [:update]
     #一意性チェック
     stampcode = StampCode.where(code: code)
     if stampcode != nil
-      flash[:notice] = "すでにこのコードは使用されました。"
+      flash[:notice] = "既にこのコードは使用されました。"
       render :show
       return
     end
