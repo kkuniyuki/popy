@@ -17,22 +17,21 @@ before_action :authenticate_user!, only: [:update]
   def show
     @user = User.find(params[:id])
     
-    # if @user.map_id = nil &&
-    #TODO　新しいマップデータを作る
-    #     @map = Map.new()
-    # else
+    if @user.map_id = nil 
+       @map = Map.new(user_id: params[:id])
+      else
+
     #TODO  既存のマップデータを呼び出す
-    #     @map = Map.find()
+       @map = Map.find(user_id: params[:id])
 
     #TODO　既存のコレクションデータを呼び出す
-    #     @stampcode = Stampcode.find()
       stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new
       stampcode_all.each do |stampcode|
         p @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
-      end     
-
-    # end
+      end
+      
+    end
 
   end
   
