@@ -28,7 +28,7 @@ before_action :authenticate_user!, only: [:update]
       stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new
       stampcode_all.each do |stampcode|
-        p @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
+        @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
       end
       
     end
