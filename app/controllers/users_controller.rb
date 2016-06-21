@@ -45,12 +45,12 @@ before_action :authenticate_user!, only: [:update]
     p code = params[:code]
     
     #一意性チェック
-    # p stampcode = StampCode.find_by(code: code)
-    # if stampcode != nil
-    #   flash[:notice] = "既にこのコードは使用されました。"
-    #   render :show
-    #   return
-    # end
+    p stampcode = StampCode.find_by(code: code)
+    if stampcode != nil
+      flash[:notice] = "既にこのコードは使用されました。"
+      render :show
+      return
+    end
       
     # コードの中のidを取り出す
     p @code_id = code[8]
@@ -73,8 +73,7 @@ before_action :authenticate_user!, only: [:update]
       render :show
 
     else
-      p "koko"
-
+  
       flash[:notice] = "コードに誤りがあります。"
       render :show
       return
@@ -82,6 +81,30 @@ before_action :authenticate_user!, only: [:update]
     
     # @stampcode_all = StampCode.where(user_id: current_user)
   end
+  
+  
+  def stamp_update
+    stampimage = Stamp.find(image: params[:stamp_image])
+    @map = Map.find(user_id: current_user.id)
+
+    unless @map.status"#{stampimage.id}".blank?
+      @map.update(status"#{stampimage.id}": true)
+      flash[:notice] = "マップがひとつ埋まりました"
+      
+      stampcde = StampCode.find(user_id: current_user.id, stamp_id: stampimage.id)
+      stampcde.destroy
+      render :show
+      
+    else
+      flash[:notice] = "すでに埋まっているか、今回のマップでは使えません。"
+      render :show
+    end
+    
+    
+  end
+  
+  
+  
 
   private
   def set_user
