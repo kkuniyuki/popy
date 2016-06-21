@@ -11,3 +11,15 @@
 </div>
 
 <a><img src="/images/map.png"/></a> 
+    あなたのMAP
+    <%= gravatar_for @map %>
+    
+    あなたが持っているスタンプ
+    <%= gravatar_for @stamp_all %>
+    
+    <br>
+    <% @stamp_all.each do |stamps| %>
+      <br>
+      <%= gravatar_for stamps %>
+      <br>
+    <% end %>
