@@ -1,37 +1,50 @@
 class UsersController < ApplicationController
-before_action :authenticate_user!, only: [:update]
 
   def new
+    p "koko"
     @user = User.new
   end
   
   def create
+    p "koko2"
     @user = User.new(user_params)
-    if @user.save
+    if  @user.save
+    p "koko3"
       redirect_to @user, notice: "会員登録が完了しました"
     else
+    p "koko4"
       render 'new'
+      return
     end
   end
   
   
   def show
     @user = User.find(params[:id])
-    @stampcode = StampCode.new()
-    
-    if @user.map_id == nil 
-       
-       @map = Map.new(user_id: params[:id])
-    
-    else
+    p "koko5"
 
-    #TODO  既存のマップデータを呼び出す
-      @map = Map.find(user_id: params[:id])
+    if @user.map_id == nil 
+    p "koko6"
+      @map = Map.new(user_id: @user.id, image:"/images/map.png")
+      unless @map.save
+    p "koko7"
+        render 'new'
+        return
+      end
+
+      @stamp_all = Array.new
+      map = Map.find_by(user_id: @user.id)
+      @user.update(map_id: map.id)
+      @user.save
+    else
+    p "koko8"
+      @map = Map.find_by(user_id: params[:id])
 
     #TODO　既存のコレクションデータを呼び出す
       stampcode_all = StampCode.where(user_id: current_user)
       @stamp_all = Array.new
       stampcode_all.each do |stampcode|
+       p "koko9"
         @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
       end     
 
@@ -42,15 +55,19 @@ before_action :authenticate_user!, only: [:update]
   
   
   def update
-    p code = params[:code]
-    
+    p "koko10"
+    @user = User.find(params[:id])
+  p code = params[:code]
+    p Map.all
+    p @map = Map.find_by(user_id: params[:id])
+
     #一意性チェック
     p stampcode = StampCode.find_by(code: code)
-    if stampcode != nil
-      flash[:notice] = "既にこのコードは使用されました。"
-      render :show
-      return
-    end
+    # if stampcode != nil
+    #   flash[:notice] = "既にこのコードは使用されました。"
+    #   render :show
+    #   return
+    # end
       
     # コードの中のidを取り出す
     p @code_id = code[8]
@@ -59,12 +76,17 @@ before_action :authenticate_user!, only: [:update]
     #stamp_idのチェック処理
     if stamp != nil
       p "koko"
-      stampcode = StampCode.create(code: params[:code], user_id: current_user.id,
+      stampcode = StampCode.create(code: params[:code], user_id: params[:id],
                                     stamp_id: @code_id
                                      )
-      stampcode.save
+      p stampcode.save
+      # p stampcode.errors.messages
+      #   flash[:notice] = stampcode.errors.messages
+      #   render :show
+      #   return
+
                                      
-      p stampcode_all = StampCode.where(user_id: current_user)
+      p stampcode_all = StampCode.where(user_id: params[:id])
       @stamp_all = Array.new
       stampcode_all.each do |stampcode_i|
         p @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
@@ -84,11 +106,13 @@ before_action :authenticate_user!, only: [:update]
   
   
   def stamp_update
+      p "koko20"
     stampimage = Stamp.find(image: params[:stamp_image])
     @map = Map.find(user_id: current_user.id)
+    p @map.status"#{stampimage.id}"
 
     unless @map.status"#{stampimage.id}".blank?
-      @map.update(status"#{stampimage.id}": true)
+      p @map.update(status"#{stampimage.id}": true)
       flash[:notice] = "マップがひとつ埋まりました"
       
       stampcde = StampCode.find(user_id: current_user.id, stamp_id: stampimage.id)
@@ -113,16 +137,16 @@ before_action :authenticate_user!, only: [:update]
 
   def user_params
     params.require(:user).permit(:name, :email, :password,
-                                 :password_confirmation)
+                                 :password_confirmation, :map_id)
   end
 
-  def authenticate_user!
-    # current_userが@userでない時はroot_pathなどにリダイレクト
-    @user = User.find(params[:id])
-    if @user != current_user
-      redirect_to root_path
-    end  
-  end
+  # def authenticate_user!
+  #   # current_userが@userでない時はroot_pathなどにリダイレクト
+  #   @user = User.find(params[:id])
+  #   if @user != current_user
+  #     redirect_to root_path
+  #   end  
+  # end
     
     
 end
