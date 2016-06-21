@@ -1,4 +1,4 @@
-<h1>Log in</h1>
+<h1>Sign In</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -10,9 +10,9 @@
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.submit "login", class: "btn btn-primary" %>
+      <%= f.submit "login", class: "btn btn-warning" %>
     <% end %>
-
-    <p>New user? <%= link_to "sign_up_now", signup_path %></p>
+    <br>
+    <p>Don't have an account? <%= link_to "Sign up", signup_path %> now! </p>
   </div>
 </div>
