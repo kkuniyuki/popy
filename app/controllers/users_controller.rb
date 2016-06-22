@@ -110,18 +110,13 @@ class UsersController < ApplicationController
     p params[:image]
     p Stamp.all
     stampimage = Stamp.find_by(image: params[:image])
-    @map = Map.find_by(user_id: current_user.id)
+    @map = Map.find_by(user_id: params[:id])
     
     case stampimage.id
     when 1 then
       if @map.status1 == "f"
         @map.update(status1: true)
       else
-　　　　stampcode_all = StampCode.where(user_id: params[:id])
-        @stamp_all = Array.new
-        stampcode_all.each do |stampcode_i|
-          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-        end
 　　　  flash[:notice] = "すでに埋まっています。"
         render :show
         return
@@ -131,11 +126,6 @@ class UsersController < ApplicationController
       if @map.status2 == "f"
         @map.update(status2: true)
       else
-　　　　stampcode_all = StampCode.where(user_id: params[:id])
-        @stamp_all = Array.new
-        stampcode_all.each do |stampcode_i|
-          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-        end
         flash[:notice] = "すでに埋まっています。"
         render :show
         return
@@ -143,13 +133,8 @@ class UsersController < ApplicationController
 
     when 3 then
       if @map.status3 == "f"
-        @map.update(status1: true)
+        @map.update(status3: true)
       else
-　　　　stampcode_all = StampCode.where(user_id: params[:id])
-        @stamp_all = Array.new
-        stampcode_all.each do |stampcode_i|
-          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-        end
         flash[:notice] = "すでに埋まっています。"
         render :show
         return
@@ -157,13 +142,8 @@ class UsersController < ApplicationController
 
     when 4 then
       if @map.status4 == "f"
-        @map.update(status1: true)
+        @map.update(status4: true)
       else
-　　　　stampcode_all = StampCode.where(user_id: params[:id])
-        @stamp_all = Array.new
-        stampcode_all.each do |stampcode_i|
-          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-        end
         flash[:notice] = "すでに埋まっています。"
         render :show
         return
@@ -176,7 +156,7 @@ class UsersController < ApplicationController
     end
     
     flash[:notice] = "マップがひとつ埋まりました"
-    stampcde = StampCode.find_by(user_id: current_user.id, stamp_id: stampimage.id)
+    stampcde = StampCode.find_by(user_id: params[:id], stamp_id: stampimage.id)
     stampcde.destroy
     render :show
   end
@@ -203,6 +183,7 @@ class UsersController < ApplicationController
   #   end
   #   @stamp_all
   # end
+  
   # def authenticate_user!
   #   # current_userが@userでない時はroot_pathなどにリダイレクト
   #   @user = User.find(params[:id])

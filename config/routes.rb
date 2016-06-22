@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :rewards
+  resources :items
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :users do

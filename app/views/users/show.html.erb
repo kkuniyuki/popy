@@ -11,42 +11,38 @@
   <div class="row">
   <div class="col-md-8">  
     <%= image_tag @map.image %>
-<<<<<<< HEAD
     <br>
-    <!--Hint btn-->
-    <%= f.submit "Get Hint", class: "btn btn-sm btn-warning" %>
+
     <!--Reward btn-->
-    <% if @map.status1 == true && @map.status2 == true && @map.status3 == true && @map.status4 == true%>  
-    <%= f.submit "Get Reward", class: "btn btn-sm btn-warning active" %>
-    <% else %>
-    <%= f.submit "Get Reward", class="btn btn-warning disabled" %>
+    <% if @map.status1 == "t" && @map.status2 == "t" && @map.status3 == "t" && @map.status4 == "t" %>  
+    <%= link_to  "Get Reward", reward_path, class: "btn btn-sm btn-warning active" %>
     <% end %>
+
   
-    <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
-    <% if @map.status1 == true %>
-=======
- 
-  <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
     <% if @map.status1 == "t" %>
      <img class=imgA1 src="/images/stamp1.png">
     <% else %>
      <img class=imgA1 src="/images/blank.jpeg">
+     <%= link_to "Get Hint", item_path, class: "btn btn-sm btn-warning" %>
     <% end %>
     <% if @map.status2 == "t" %>
      <img class=imgB1 src="/images/stamp2.png">
     <% else %>
      <img class=imgB1 src="/images/blank.jpeg">
+     <%= link_to "Get Hint", item_path, class: "btn btn-sm btn-warning" %>
     <% end %>
 
     <% if @map.status3 == "t" %>
      <img class=imgC1 src="/images/stamp3.png">
     <% else %>
      <img class=imgC1 src="/images/blank.jpeg">
+     <%= link_to "Get Hint", item_path, class: "btn btn-sm btn-warning" %>
     <% end %>
     <% if @map.status4 == "t" %>
      <img class=imgD1 src="/images/stamp4.png">
     <% else %>
      <img class=imgD1 src="/images/blank.jpeg">
+     <%= link_to "Get Hint", item_path, class: "btn btn-sm btn-warning" %>
     <% end %>
      
   </div>
