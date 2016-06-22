@@ -12,8 +12,8 @@
     <%= link_to "fü POPPY", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "My Page", root_path %></li>
-        <!--user_path(@user)-->
+        <li><%= link_to "My Page", '#' %></li>
+        <!--root_path user_path(@user)-->
         <% if logged_in? %>
           <li><%= link_to "Log out", logout_path, method: "delete" %></li>
         <% else %>

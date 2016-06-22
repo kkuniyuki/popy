@@ -1,22 +1,19 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
-  root to: 'welcome#index'
-  # root to: 'sessions#new'
-=======
   
   # set "app/views/sessions/new.html.erb" as the top page.
   root to: 'sessions#new'
   # root to: 'welcome#index'
->>>>>>> caf5a41deb977a771cb3ca588eaf8c34b20bd8a3
 
   get    'signup', to: 'users#new'
   get    'login' , to: 'sessions#new'
-  # get    'index' , to: 'welcome#index'
+  # assign http://...../index to welcome Controller's say action
+  get    'index' , to: 'welcome#index'
   post   'login' , to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
   resources :map
   resources :users
+  resources :rewards
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :users do
