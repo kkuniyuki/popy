@@ -11,8 +11,17 @@
   <div class="row">
   <div class="col-md-8">  
     <%= image_tag @map.image %>
- 
-  <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
+    <br>
+    <!--Hint btn-->
+    <%= f.submit "Get Hint", class: "btn btn-sm btn-warning" %>
+    <!--Reward btn-->
+    <% if @map.status1 == true && @map.status2 == true && @map.status3 == true && @map.status4 == true%>  
+    <%= f.submit "Get Reward", class: "btn btn-sm btn-warning active" %>
+    <% else %>
+    <%= f.submit "Get Reward", class="btn btn-warning disabled" %>
+    <% end %>
+  
+    <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
     <% if @map.status1 == true %>
      <img class=imgA1 src="/images/stamp1.png">
     <% else %>

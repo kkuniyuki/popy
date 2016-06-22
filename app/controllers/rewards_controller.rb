@@ -11,6 +11,9 @@ class RewardsController < ApplicationController
     end
   end
   
+  def update
+  end
+  
   private
   def reward_params
     params.require(:reward).permit(:content)
