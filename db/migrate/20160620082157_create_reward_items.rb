@@ -2,7 +2,7 @@ class CreateRewardItems < ActiveRecord::Migration
   def change
     create_table :reward_items do |t|
       t.string :product_name
-      t.binary :image
+      t.string :image
       t.string :description
       t.string :catelogue
       t.integer :map_id

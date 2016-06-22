@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 20160620082157) do
 
   create_table "maps", force: :cascade do |t|
-    t.binary   "image"
+    t.string   "image"
     t.string   "status1",    default: "f"
     t.string   "status2",    default: "f"
     t.string   "status3",    default: "f"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20160620082157) do
 
   create_table "recommend_items", force: :cascade do |t|
     t.string   "product_name"
-    t.binary   "image"
     t.string   "url"
     t.integer  "stamp_id"
     t.datetime "created_at",   null: false
@@ -35,7 +34,7 @@ ActiveRecord::Schema.define(version: 20160620082157) do
 
   create_table "reward_items", force: :cascade do |t|
     t.string   "product_name"
-    t.binary   "image"
+    t.string   "image"
     t.string   "description"
     t.string   "catelogue"
     t.integer  "map_id"
@@ -52,7 +51,7 @@ ActiveRecord::Schema.define(version: 20160620082157) do
   end
 
   create_table "stamps", force: :cascade do |t|
-    t.binary   "image"
+    t.string   "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -11,6 +11,7 @@
   <div class="row">
   <div class="col-md-8">  
     <%= image_tag @map.image %>
+<<<<<<< HEAD
     <br>
     <!--Hint btn-->
     <%= f.submit "Get Hint", class: "btn btn-sm btn-warning" %>
@@ -23,21 +24,26 @@
   
     <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
     <% if @map.status1 == true %>
+=======
+ 
+  <!--<div class="col-md-8"><a><img src="/images/map.png"/></a> -->
+    <% if @map.status1 == "t" %>
      <img class=imgA1 src="/images/stamp1.png">
     <% else %>
      <img class=imgA1 src="/images/blank.jpeg">
     <% end %>
-    <% if @map.status2 == true %>
+    <% if @map.status2 == "t" %>
      <img class=imgB1 src="/images/stamp2.png">
     <% else %>
      <img class=imgB1 src="/images/blank.jpeg">
     <% end %>
-    <% if @map.status3 == true %>
+
+    <% if @map.status3 == "t" %>
      <img class=imgC1 src="/images/stamp3.png">
     <% else %>
      <img class=imgC1 src="/images/blank.jpeg">
     <% end %>
-    <% if @map.status4 == true %>
+    <% if @map.status4 == "t" %>
      <img class=imgD1 src="/images/stamp4.png">
     <% else %>
      <img class=imgD1 src="/images/blank.jpeg">
@@ -54,16 +60,17 @@
   <% end %>
   <br><br>
 
+  <% if @stamp_all.present? %>
   <% @stamp_all.each do |f| %>
-    <%= link_to image_tag f.image, stamp_update_user_path(:stamp_image => f.image) %>
-    
+    <%
+    # link_to image_tag f.image, stamp_update_user_path
+    %>
+    <a href='/users/<%= @user.id %>/stamp_update?image=<%= f.image %>'><%= image_tag f.image %></a>
+  <% end %>
   <% end %>
   
   </div>
   </div>
 </div>
 
-    <% link_to image_tag("/images/stamp1.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <% link_to image_tag("/images/stamp2.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <% link_to image_tag("/images/stamp3.png", :border => 0, :alt => '', :title => ''), login_path%>
-    <% link_to image_tag("/images/stamp4.png", :border => 0, :alt => '', :title => ''), login_path%>
+
