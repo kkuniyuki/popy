@@ -57,17 +57,17 @@ class UsersController < ApplicationController
   def update
     p "koko10"
     @user = User.find(params[:id])
-  p code = params[:code]
-    p Map.all
+    p code = params[:code]
+    # p Map.all
     p @map = Map.find_by(user_id: params[:id])
 
     #一意性チェック
     p stampcode = StampCode.find_by(code: code)
-    # if stampcode != nil
-    #   flash[:notice] = "既にこのコードは使用されました。"
-    #   render :show
-    #   return
-    # end
+    if stampcode != nil
+      flash[:notice] = "既にこのコードは使用されました。"
+      render :show
+      return
+    end
       
     # コードの中のidを取り出す
     p @code_id = code[8]
@@ -101,30 +101,84 @@ class UsersController < ApplicationController
       return
     end
     
-    # @stampcode_all = StampCode.where(user_id: current_user)
   end
   
   
   def stamp_update
-      p "koko20"
-    stampimage = Stamp.find(image: params[:stamp_image])
-    @map = Map.find(user_id: current_user.id)
-    p @map.status"#{stampimage.id}"
+    @user = User.find(params[:id])
+    p "koko20"
+    p params[:image]
+    p Stamp.all
+    stampimage = Stamp.find_by(image: params[:image])
+    @map = Map.find_by(user_id: current_user.id)
+    
+    case stampimage.id
+    when 1 then
+      if @map.status1 == "f"
+        @map.update(status1: true)
+      else
+　　　　stampcode_all = StampCode.where(user_id: params[:id])
+        @stamp_all = Array.new
+        stampcode_all.each do |stampcode_i|
+          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+        end
+　　　  flash[:notice] = "すでに埋まっています。"
+        render :show
+        return
+      end
 
-    unless @map.status"#{stampimage.id}".blank?
-      p @map.update(status"#{stampimage.id}": true)
-      flash[:notice] = "マップがひとつ埋まりました"
-      
-      stampcde = StampCode.find(user_id: current_user.id, stamp_id: stampimage.id)
-      stampcde.destroy
-      render :show
-      
+    when 2 then   
+      if @map.status2 == "f"
+        @map.update(status2: true)
+      else
+　　　　stampcode_all = StampCode.where(user_id: params[:id])
+        @stamp_all = Array.new
+        stampcode_all.each do |stampcode_i|
+          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+        end
+        flash[:notice] = "すでに埋まっています。"
+        render :show
+        return
+      end
+
+    when 3 then
+      if @map.status3 == "f"
+        @map.update(status1: true)
+      else
+　　　　stampcode_all = StampCode.where(user_id: params[:id])
+        @stamp_all = Array.new
+        stampcode_all.each do |stampcode_i|
+          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+        end
+        flash[:notice] = "すでに埋まっています。"
+        render :show
+        return
+      end
+
+    when 4 then
+      if @map.status4 == "f"
+        @map.update(status1: true)
+      else
+　　　　stampcode_all = StampCode.where(user_id: params[:id])
+        @stamp_all = Array.new
+        stampcode_all.each do |stampcode_i|
+          @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+        end
+        flash[:notice] = "すでに埋まっています。"
+        render :show
+        return
+      end
+    
     else
-      flash[:notice] = "すでに埋まっているか、今回のマップでは使えません。"
+      flash[:notice] = "今回のマップでは使えません。"
       render :show
+      return
     end
     
-    
+    flash[:notice] = "マップがひとつ埋まりました"
+    stampcde = StampCode.find_by(user_id: current_user.id, stamp_id: stampimage.id)
+    stampcde.destroy
+    render :show
   end
   
   
@@ -140,6 +194,15 @@ class UsersController < ApplicationController
                                  :password_confirmation, :map_id)
   end
 
+
+  # def stampcode_all_user
+  #   stampcode_all = StampCode.where(user_id: params[:id])
+  #   @stamp_all = Array.new
+  #   stampcode_all.each do |stampcode_i|
+  #     @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+  #   end
+  #   @stamp_all
+  # end
   # def authenticate_user!
   #   # current_userが@userでない時はroot_pathなどにリダイレクト
   #   @user = User.find(params[:id])

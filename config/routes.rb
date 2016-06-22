@@ -1,27 +1,20 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
-  root to: 'welcome#index'
-  # root to: 'sessions#new'
-=======
-  
-  # set "app/views/sessions/new.html.erb" as the top page.
   root to: 'sessions#new'
   # root to: 'welcome#index'
->>>>>>> caf5a41deb977a771cb3ca588eaf8c34b20bd8a3
 
   get    'signup', to: 'users#new'
   get    'login' , to: 'sessions#new'
-  # get    'index' , to: 'welcome#index'
+  get    'index' , to: 'welcome#index'
   post   'login' , to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  resources :map
   resources :users
+  resources :items
   resources :sessions, only: [:new, :create, :destroy]
   
   resources :users do
     member do
-      patch 'stamp_update'
+      get 'stamp_update'
     end
   end
   
