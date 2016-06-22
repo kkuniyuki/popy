@@ -2,10 +2,29 @@
   <aside class="col-md-4">
     <h3>Reward</h3>      
     <section class="user_info">
-      <h5>
-        <%= @user.name %>
-      </h5>
-      <hr>
+    <h5>
+    <%= @user.name %>
+    </h5>
+
     </section>
   </aside>
+  <div class="row">
+  <div class="col-md-8">  
+    <%= image_tag @map.image %>
+    <img class=imgFlag src="/images/flag.png">
+     
+  </div>
+
+  <div class="col-md-4">
+    <br><br><br><br><br>
+    <div class="list-group">
+     <a href="#" class="list-group-item">1億フフルルポイント</a>
+     <a href="#" class="list-group-item">Reward 2</a>
+     <a href="#" class="list-group-item">Reward 3</a>
+     <a href="#" class="list-group-item">Reward 4</a>
+    </div>
+    <br>
+
+  </div>
+  </div>
 </div>

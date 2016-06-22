@@ -1,18 +1,14 @@
 class UsersController < ApplicationController
 
   def new
-    p "koko"
     @user = User.new
   end
   
   def create
-    p "koko2"
     @user = User.new(user_params)
     if  @user.save
-    p "koko3"
-      redirect_to @user, notice: "会員登録が完了しました"
+      redirect_to "/welcomes/#{@user.id}", alert: "会員登録が完了しました"
     else
-    p "koko4"
       render 'new'
       return
     end
@@ -20,83 +16,64 @@ class UsersController < ApplicationController
   
   
   def show
-    @user = User.find(params[:id])
-    p "koko5"
-
+    set_user
+    
+    # 初回ユーザーチェック
     if @user.map_id == nil 
-    p "koko6"
       @map = Map.new(user_id: @user.id, image:"/images/map.png")
       unless @map.save
-    p "koko7"
         render 'new'
         return
       end
 
-      @stamp_all = Array.new
+    # 　ユーザーにマップを紐付ける
       map = Map.find_by(user_id: @user.id)
       @user.update(map_id: map.id)
       @user.save
+
+      # @stamp_all = Array.new
     else
-    p "koko8"
+      #既存のマップとコレクションデータを呼び出す
       @map = Map.find_by(user_id: params[:id])
-
-    #TODO　既存のコレクションデータを呼び出す
-      stampcode_all = StampCode.where(user_id: current_user)
-      @stamp_all = Array.new
-      stampcode_all.each do |stampcode|
-       p "koko9"
-        @stamp_all << Stamp.find_by(id: stampcode.stamp_id)
-      end     
-
+      stampcode_all_user
     end
 
 
   end
   
-  
+#コード入力処理
   def update
-    p "koko10"
-    @user = User.find(params[:id])
-    p code = params[:code]
-    # p Map.all
-    p @map = Map.find_by(user_id: params[:id])
+    set_user
+    @map = Map.find_by(user_id: params[:id])
 
-    #一意性チェック
-    p stampcode = StampCode.find_by(code: code)
+    #コードの一意性チェック
+    code = params[:code]
+    stampcode = StampCode.find_by(code: code)
     if stampcode != nil
-      flash[:notice] = "既にこのコードは使用されました。"
+      flash[:alert] = "既にこのコードは使用されました。"
       render :show
       return
     end
       
-    # コードの中のidを取り出す
-    p @code_id = code[8]
-    p stamp = Stamp.find_by(id: @code_id)
+    # コードの中のスタンプidを取り出す
+    @code_id = code[8]
+    stamp = Stamp.find_by(id: @code_id)
     
     #stamp_idのチェック処理
     if stamp != nil
-      p "koko"
+    #stampcodeの保存
       stampcode = StampCode.create(code: params[:code], user_id: params[:id],
                                     stamp_id: @code_id
                                      )
-      p stampcode.save
-      # p stampcode.errors.messages
-      #   flash[:notice] = stampcode.errors.messages
-      #   render :show
-      #   return
-
-                                     
-      p stampcode_all = StampCode.where(user_id: params[:id])
-      @stamp_all = Array.new
-      stampcode_all.each do |stampcode_i|
-        p @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-      end     
-      p @stamp_all
+      stampcode.save
+      
+    #stampコレクションをshowへ表示
+      stampcode_all_user                               
       render :show
 
     else
-  
-      flash[:notice] = "コードに誤りがあります。"
+      stampcode_all_user        
+      flash[:alert] = "コードに誤りがあります。"
       render :show
       return
     end
@@ -104,20 +81,22 @@ class UsersController < ApplicationController
   end
   
   
+#スタンプが使われた時の処理
   def stamp_update
-    @user = User.find(params[:id])
-    p "koko20"
-    p params[:image]
-    p Stamp.all
-    stampimage = Stamp.find_by(image: params[:image])
+    set_user
     @map = Map.find_by(user_id: params[:id])
     
+    # 使われたスタンプセット
+    stampimage = Stamp.find_by(image: params[:image])
+    
+    # マップ状況とチェック、更新
     case stampimage.id
     when 1 then
       if @map.status1 == "f"
         @map.update(status1: true)
       else
-　　　  flash[:notice] = "すでに埋まっています。"
+        stampcode_all_user        
+        flash[:alert] = "すでに埋まっています。"
         render :show
         return
       end
@@ -126,7 +105,8 @@ class UsersController < ApplicationController
       if @map.status2 == "f"
         @map.update(status2: true)
       else
-        flash[:notice] = "すでに埋まっています。"
+        stampcode_all_user
+        flash[:alert] = "すでに埋まっています。"
         render :show
         return
       end
@@ -135,7 +115,8 @@ class UsersController < ApplicationController
       if @map.status3 == "f"
         @map.update(status3: true)
       else
-        flash[:notice] = "すでに埋まっています。"
+        stampcode_all_user
+        flash[:alert] = "すでに埋まっています。"
         render :show
         return
       end
@@ -144,20 +125,25 @@ class UsersController < ApplicationController
       if @map.status4 == "f"
         @map.update(status4: true)
       else
-        flash[:notice] = "すでに埋まっています。"
+        stampcode_all_user
+        flash[:alert] = "すでに埋まっています。"
         render :show
         return
       end
     
     else
-      flash[:notice] = "今回のマップでは使えません。"
+      stampcode_all_user        
+      flash[:alert] = "今回のマップでは使えません。"
       render :show
       return
     end
     
-    flash[:notice] = "マップがひとつ埋まりました"
+    flash[:alert] = "マップがひとつ埋まりました"
+
+    # 使われたスタンプを削除
     stampcde = StampCode.find_by(user_id: params[:id], stamp_id: stampimage.id)
     stampcde.destroy
+    stampcode_all_user        
     render :show
   end
   
@@ -175,13 +161,19 @@ class UsersController < ApplicationController
   end
 
 
-  # def stampcode_all_user
-  #   stampcode_all = StampCode.where(user_id: params[:id])
-  #   @stamp_all = Array.new
-  #   stampcode_all.each do |stampcode_i|
-  #     @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
-  #   end
-  #   @stamp_all
+  def stampcode_all_user
+    stampcode_all = StampCode.where(user_id: params[:id])
+    @stamp_all = Array.new
+    stampcode_all.each do |stampcode_i|
+      @stamp_all << Stamp.find_by(id: stampcode_i.stamp_id)
+    end
+    @stamp_all
+  end
+  
+  # def downcase
+  #   flash[:alert] = "すでに埋まっています。"
+  #   render :show
+  #   return
   # end
   
   # def authenticate_user!

@@ -140,7 +140,7 @@ input {
 
 /* flash[:notice] */
 
-.notice  {
+.alert  {
   color: #cccc9;
   border:1px solid #CCCC99;
   text-align: center;
@@ -243,3 +243,8 @@ span.picture {
   left: 250px; 
   z-index: 100; }  
   
+.imghint { 
+  position:absolute; 
+  top: 50px; 
+  left: 250px; 
+  z-index: 100; }  

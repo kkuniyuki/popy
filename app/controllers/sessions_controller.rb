@@ -7,11 +7,11 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:session][:email].downcase)
     if @user && @user.authenticate(params[:session][:password])
       session[:user_id] = @user.id
-      flash[:info] = "logged in as #{@user.name}"
-      redirect_to @user
+      flash[:alert] = "POPPY!! #{@user.name}さん"
+      redirect_to "/welcomes/#{@user.id}"
       # redirect_to index_path(@user)
     else
-      flash[:danger] = 'invalid email/password combination'
+      flash[:alert] = 'email/passwordどちらかに誤りがあります。'
       render 'new'
     end
   end

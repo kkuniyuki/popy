@@ -1,6 +1,6 @@
 <div class="row">
   <aside class="col-md-4">
-    <h3>Item</h3>      
+    <h3>Hint</h3>      
     <section class="user_info">
       <h5>
         <%= @user.name %>
@@ -8,4 +8,44 @@
       <hr>
     </section>
   </aside>
+    <div class="row">
+  <div class="col-md-8">  
+    <%= image_tag @map.image %>
+    <% if @map.status1 == "t" %>
+     <img class=imgA1 src="/images/stamp1.png">
+    <% else %>
+     <img class=imgA1 src="/images/blank.jpeg">
+    <% end %>
+    <% if @map.status2 == "t" %>
+     <img class=imgB1 src="/images/stamp2.png">
+    <% else %>
+     <img class=imgB1 src="/images/blank.jpeg">
+    <% end %>
+
+    <% if @map.status3 == "t" %>
+     <img class=imgC1 src="/images/stamp3.png">
+    <% else %>
+     <img class=imgC1 src="/images/blank.jpeg">
+    <% end %>
+    <% if @map.status4 == "t" %>
+     <img class=imgD1 src="/images/stamp4.png">
+    <% else %>
+     <img class=imgD1 src="/images/blank.jpeg">
+    <% end %>
+    <img class=imghint src="/images/hint.png">
+
+  </div>
+
+  <div class="col-md-4">
+    <br><br><br><br><br>
+    <div class="list-group">
+     <a href="#" class="list-group-item">First recommend item</a>
+     <a href="#" class="list-group-item">Second recommend item</a>
+     <a href="#" class="list-group-item">Third recommend item</a>
+     <a href="#" class="list-group-item">Forth recommend item</a>
+    </div>
+    <br>
+
+  </div>
+  </div>
 </div>
